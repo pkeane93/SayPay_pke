@@ -11,5 +11,13 @@ Rails.application.routes.draw do
   
   root to: "pages#home"
 
+  resources :trips, only: [:index, :new, :create] do
+    resources :expenses, only: [:new, :create]
+  end
 
+  resources :expenses, only: [:index]
+
+  resources :chats, only: [:show] do
+    resources :messages, only: [:create]
+  end
 end
