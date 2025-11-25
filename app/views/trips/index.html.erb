@@ -18,8 +18,12 @@
 
 
   <%# Button that redirects to the new trip page %>
-  <div class="flex justify-end">
-    <%=link_to("ADD", new_trip_path, class: "block border p-4 rounded-md text-center bg-blue-500 text-white")%>
-  </div>
+ <div class="flex justify-end">
+  <%= link_to new_trip_path, class: "p-3 rounded-full bg-[#21A179] text-white flex items-center justify-center" do %>
+    <i data-lucide="plus" class="w-6 h-6"></i>
+  <% end %>
+</div>
+
+
 
 </div>
