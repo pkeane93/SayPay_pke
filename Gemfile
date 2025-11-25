@@ -84,3 +84,6 @@ gem "ruby_llm", "~> 1.2.0"
 
 # for money and currency handling
 gem 'money-rails', '~> 1.12'
+
+# for cloudinary audio handling
+gem "cloudinary"
