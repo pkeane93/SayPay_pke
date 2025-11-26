@@ -1,37 +1,15 @@
 <div class="max-w-[390px] h-[calc(100vh-4rem)] border flex flex-col">
 
-  <h1 class="text-5xl font-bold mb-4">SayPay</h1>
   <%# SayPay Logo %>
-  <div id ="text-area" class="p-6 flex-1 overflow-auto">
+  <h1 class="text-5xl font-bold mb-4">SayPay</h1>
 
-    <ul class="flex flex-col space-y-2">
-      <% @messages.each do |message| %>
-      <%# right = user, left = assistant LLM %>
-        <li class="flex <%= message.role == 'user' ? 'justify-end' : 'justify-start' %>">
-
-          <%# conversation bubble %>
-          <div class="max-w-xs px-4 py-2 rounded-lg
-            <%= message.role == 'user' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black' %>">
-            <%= message.content %>
-          </div>
-
-        </li>
-      <% end %>
-    </ul>
+  <%# Messages %>
+  <div id ="messages" class="p-6 flex-1 overflow-auto">
+    <%= render "messages/message", messages: @chat.messages %>
   </div>
 
   <%# Chatbox  %>
-  <div class="chat-area flex flex-col border rounded m-2 p-2 bg-[#DDF8F0]">
-
-    <%= form_with model: [@chat, @message], method: :post, html: { class: "flex flex-col" } do |f| %>
-
-      <%= f.text_area :content, class: "border-none outline-none resize-none", placeholder: "Ask anything..", required: true %>
-
-      <div class="flex justify-end mt-2">
-        <%= f.submit "Send", class: "float-right border px-4 py-2 bg-white hover:bg-gray-100 rounded" %>
-      </div>
-
-    <%end%>
-
+  <div id="new_message_container" class="chat-area flex flex-col border rounded m-2 p-2 bg-[#DDF8F0]">
+     <%= render "messages/form", chat: @chat, message: @message %>
   </div>
 </div>

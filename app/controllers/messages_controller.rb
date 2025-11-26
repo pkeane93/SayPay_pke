@@ -16,7 +16,18 @@ If you need user details (monthly income, recurring bills, currency, or goals), 
       @ruby_llm_chat = RubyLLM.chat
       build_conversation_history
       llm_response = @ruby_llm_chat.with_instructions(SYSTEM_PROMPT).ask(@message.content)
-      @llm_reply = Message.create!(chat: @chat, content: llm_response.content, role: "assistant")
+      @chat.messages.create(chat: @chat, content: llm_response.content, role: "assistant")
+
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to chat_path(@chat) }
+      end
+
+    else
+      respond_to do |format|
+        format.turbo_stream { render turbo_stream: turbo_stream.replace("new_message", partial: "messages/form", locals: { chat: @chat, message: @message }) }
+        format.html { render "chats/show", status: :unprocessable_entity }
+      end
     end
   end
 
