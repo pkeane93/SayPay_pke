@@ -5,7 +5,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :trips, dependent: :destroy
-  has_many :expenses, through: :trips
+  has_many :recordings, through: :trips
+  has_many :expenses, through: :recordings
   has_many :chats, dependent: :destroy
 
   # TODO: update currency with expense way of handling currencies

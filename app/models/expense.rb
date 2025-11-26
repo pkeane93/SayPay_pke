@@ -1,5 +1,5 @@
 class Expense < ApplicationRecord
-  belongs_to :trip
+  belongs_to :recording
 
   CATEGORIES = [
     "Meals",
