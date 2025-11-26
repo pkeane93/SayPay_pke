@@ -1,1 +1,27 @@
-<h1>Chat Show connected</h1>
+<div class="max-w-[390px] h-[calc(100vh-4rem)] border flex flex-col">
+
+  <%# SayPay Logo %>
+  <div class="p-6">
+    <h1 class="text-5xl font-bold mb-4">SayPay</h1>
+    <p>Text will be here.</p>
+  </div>
+
+  <%# Conversation space %>
+  <div id="text-screen" class="p-6 flex-1 overflow-y-auto">
+  </div>
+
+  <%# Chatbox  %>
+  <div class="chat-area flex flex-col border rounded m-2 p-2 bg-[#DDF8F0]">
+
+    <%= form_with url: "#", method: :post, html: { class: "flex flex-col" } do |f| %>
+
+      <%= f.text_area :content, class: "border-none outline-none resize-none", placeholder: "Ask anything..", required: true %>
+
+      <div class="flex justify-end mt-2">
+        <%= f.submit "Send", class: "float-right border px-4 py-2 bg-white hover:bg-gray-100 rounded" %>
+      </div>
+
+    <%end%>
+
+  </div>
+</div>
