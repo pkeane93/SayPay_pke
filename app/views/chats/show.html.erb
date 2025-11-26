@@ -13,7 +13,7 @@
   <%# Chatbox  %>
   <div class="chat-area flex flex-col border rounded m-2 p-2 bg-[#DDF8F0]">
 
-    <%= form_with url: "#", method: :post, html: { class: "flex flex-col" } do |f| %>
+    <%= form_with model: [@chat, @message], method: :post, html: { class: "flex flex-col" } do |f| %>
 
       <%= f.text_area :content, class: "border-none outline-none resize-none", placeholder: "Ask anything..", required: true %>
 
