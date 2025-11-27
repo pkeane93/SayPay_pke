@@ -77,26 +77,27 @@ class ProcessExpenseAudioJob < ApplicationJob
 
       transcription = nil
 
-    # begin
-      transcription = RubyLLM.transcribe(
-        tempfile.path,
-        model: "gpt-4o-mini-transcribe",
-        prompt: TRANSCRIPTION_PROMPT,
-        provider: :openai)
-    # rescue StandardError => e
-    #   Rails.logger.warn("Transcription failed: #{e.class}: #{e.message}")
-    #   return
-    # end
+      # transcription = RubyLLM.transcribe(
+      #   tempfile.path,
+      #   model: "gpt-4o-mini-transcribe",
+      #   prompt: TRANSCRIPTION_PROMPT,
+      #   provider: :openai)
 
-    expense.update!(audio_transcript: transcription.text)
-    debugger
+      transcription = "Had a burger for 12 EUR at a local diner."
+
+      expense.update!(audio_transcript: transcription) # TODO: add text to transcription
+
+    @ruby_llm_chat = RubyLLM.context do |config|
+      config.openai_api_key = ENV['GITHUB_TOKEN']
+      config.openai_api_base = "https://models.inference.ai.azure.com"
+    end
 
     # Create expense record as JSON with transcription
-    ruby_llm_chat = RubyLLM.chat(provider: :gemini)
+    ruby_llm_chat = @ruby_llm_chat.chat
     ruby_llm_chat.with_instructions(SYSTEM_PROMPT)
       
     # extraction of audio details
-    response = ruby_llm_chat.ask("Please extract expense details from this transcribed text: #{transcription.text}")
+    response = ruby_llm_chat.ask("Please extract expense details from this transcribed text: #{transcription}") # todo: add text
     debugger
 
     parsed = JSON.parse(response.content) rescue nil
