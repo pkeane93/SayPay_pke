@@ -18,7 +18,7 @@ class ExpensesController < ApplicationController
     if @expense.save
       # enqueue audio processing asynchronously
       ProcessExpenseAudioJob.perform_now(@expense.id) if @expense.audio.attached?
-      redirect_to new_trip_expense_path(trip_id: @expense.trip_id), notice: "Recording uploaded successfully."
+      redirect_to edit_trip_expense_path(trip: @expense.trip, id: @expense), notice: "Recording uploaded successfully."
     else
       @expense.audio.purge if @expense.audio.attached?
       flash.now[:alert] = @expense.errors.full_messages.to_sentence
@@ -26,18 +26,27 @@ class ExpensesController < ApplicationController
     end
   end
 
+  def edit
+    @expense = Expense.find(params[:id])
+    @trip = @expense.trip
+  end
+
+  def update
+    @expense = Expense.find(params[:id])
+    @trip = @expense.trip
+    
+    if @expense.update!(expense_params.except(:audio))
+      redirect_to new_trip_expense_path(@trip), notice: "Expense updated successfully."
+    else
+      flash.now[:alert] = @expense.errors.full_messages.to_sentence
+      render "expenses/edit", status: :unprocessable_entity
+    end
+
+  end
+
   private
 
   def expense_params
-    params.require(:expense).permit(:trip_id, :audio)
+    params.require(:expense).permit(:trip_id, :audio, :local_amount, :local_amount_currency, :category)
   end
-
-  # def process_file
-  #   ruby_llm_chat = RubyLLM.chat(model: "gpt-4o-audio-preview") # audio-capable model
-  #   prompt = "Could you describe the content in this audio file?"
-  #   ruby_llm_chat.with_instructions(SYSTEM_PROMPT)
-  #   response = ruby_llm_chat.ask(prompt, with: {audio: @expense.audio})
-  #   puts response.content
-  #   puts "Tokens used: #{response.input_tokens} input, #{response.output_tokens} output"
-  # end
 end
