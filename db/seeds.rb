@@ -16,12 +16,13 @@ User.destroy_all
 
 user = User.create!(email: "test@test.de", password: "123123", first_name: "Test", base_currency: "USD")
 
-Trip.create!(user_id: user.id, country: "Germany", budget: 1000)
+last_trip = Trip.create!(user_id: user.id, country: "Germany", budget: 1000)
+
+Expense.create!(category: "Meals", local_currency: "IDR", local_amount: 200000, base_amount: 10, audio_transcript: "burger for 200k rupiah", notes: "none", trip_id: last_trip.id)
+Expense.create!(category: "Meals", local_currency: "IDR", local_amount: 300000, base_amount: 15, audio_transcript: "steak for 300k rupiah", notes: "none", trip_id: last_trip.id)
 
 puts "User count: #{User.count}"
 puts "Trip count: #{Trip.count}"
 puts "Expense count: #{Expense.count}"
 puts "Chat count: #{Chat.count}"
 puts "Message count: #{Message.count}"
-
-
