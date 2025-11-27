@@ -8,11 +8,11 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
-  
+
   root to: "pages#home"
 
   resources :trips, only: [:index, :new, :create] do
-    resources :expenses, only: [:new, :create]
+    resources :expenses, only: [:new, :create, :edit, :update]
   end
 
   resources :expenses, only: [:index]
@@ -20,6 +20,4 @@ Rails.application.routes.draw do
   resources :chats, only: [:show] do
     resources :messages, only: [:create]
   end
-
-  resources :recordings, only: [:create]
 end
