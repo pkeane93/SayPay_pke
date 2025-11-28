@@ -94,7 +94,7 @@ class ProcessExpenseAudioJob < ApplicationJob
 
       parsed = JSON.parse(response.content) rescue nil
       if parsed.present?
-        expense.update!(
+        expense.update(
           local_amount_cents: parsed["local_amount"],
           local_amount_currency: parsed["local_currency"] || "USD",
           category: parsed["category"],
