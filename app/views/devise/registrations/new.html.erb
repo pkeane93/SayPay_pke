@@ -1,0 +1,79 @@
+<div class="min-h-screen flex flex-col justify-center px-6 py-10 bg-white">
+
+  <h2 class="text-3xl font-bold text-center text-[#06231B] mb-8">
+    Create your account
+  </h2>
+
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), class: "space-y-6") do |f| %>
+
+    <%= render "devise/shared/error_messages", resource: resource %>
+
+    <!-- First name -->
+    <div>
+      <label class="block text-sm font-medium text-[#06231B]/80 mb-1">
+        First name
+      </label>
+      <%= f.text_field :first_name,
+            autofocus: true,
+            autocomplete: "given-name",
+            class: "w-full px-4 py-3 bg-[#F7FAF9] border border-[#E6ECEA] rounded-xl 
+                    focus:ring-2 focus:ring-[#21A179] focus:outline-none text-[#06231B]" %>
+    </div>
+
+    <!-- Email -->
+    <div class="mt-4">
+      <label class="block text-sm font-medium text-[#06231B]/80 mb-1">
+        Email
+      </label>
+      <%= f.email_field :email,
+            autofocus: true,
+            autocomplete: "email",
+            class: "w-full px-4 py-3 bg-[#F7FAF9] border border-[#E6ECEA] rounded-xl 
+                    focus:ring-2 focus:ring-[#21A179] focus:outline-none text-[#06231B]" %>
+    </div>
+
+    <!-- Password -->
+    <div class="mt-4">
+      <div class="flex items-center justify-between">
+        <label class="block text-sm font-medium text-[#06231B]/80 mb-1">
+          Password
+        </label>
+        <% if @minimum_password_length %>
+          <span class="text-xs text-[#06231B]/50">
+            (<%= @minimum_password_length %> characters minimum)
+          </span>
+        <% end %>
+      </div>
+
+      <%= f.password_field :password,
+            autocomplete: "new-password",
+            class: "w-full px-4 py-3 bg-[#F7FAF9] border border-[#E6ECEA] rounded-xl 
+                    focus:ring-2 focus:ring-[#21A179] focus:outline-none text-[#06231B]" %>
+    </div>
+
+    <!-- Password Confirmation -->
+    <div class="mt-4">
+      <label class="block text-sm font-medium text-[#06231B]/80 mb-1">
+        Confirm password
+      </label>
+      <%= f.password_field :password_confirmation,
+            autocomplete: "new-password",
+            class: "w-full px-4 py-3 bg-[#F7FAF9] border border-[#E6ECEA] rounded-xl 
+                    focus:ring-2 focus:ring-[#21A179] focus:outline-none text-[#06231B]" %>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="mt-10">
+      <%= f.submit "Sign up",
+            class: "w-full bg-[#21A179] text-white py-3 rounded-full font-semibold 
+                    hover:bg-[#1c8f6b] transition" %>
+    </div>
+
+  <% end %>
+
+  <!-- Devise Links -->
+  <div class="mt-6 text-center">
+    <%= render "devise/shared/links" %>
+  </div>
+
+</div>
