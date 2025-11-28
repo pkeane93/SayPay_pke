@@ -6,9 +6,6 @@
   <%# SHOW CURRENCY IN REAL DECIMALS; AND CURRENCY AMONG THE POSSIBLE ONES %>
   <%# change currencies to readable %>
 
-  <%= @expense.local_amount.class %>
-    <%= @expense.local_amount_cents.class%>
-
   <%= form_with model: [@trip, @expense], local: true do |f| %>
     <div class="space-y-4">
       <div>
