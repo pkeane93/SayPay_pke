@@ -28,6 +28,8 @@ class ExpensesController < ApplicationController
     end
   end
 
+private
+
   def summarize_exp
     # Replace with current user!
     @user = User.last
