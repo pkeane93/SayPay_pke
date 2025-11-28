@@ -23,18 +23,17 @@ class Expense < ApplicationRecord
   VALID_CURRENCIES = Money::Currency.table.keys.map{ |k| k.to_s.upcase }
 
   # set defaults when initializing
-  attribute :local_amount, :integer, default: nil
-  attribute :base_amount, :integer, default: nil
+  monetize :local_amount_cents
+  monetize :base_amount_cents
+
   attribute :category, :string, default: nil
-  attribute :local_currency, :string, default: nil
+  # attribute :local_currency, :string, default: nil
 
   # allow nil values
-  validates :local_amount, numericality: { greater_than: 0 }, allow_nil: true
-  validates :base_amount, numericality: { greater_than: 0 }, allow_nil: true
   validates :category, inclusion: { in: CATEGORIES }, allow_blank: true
 
   # validate that currency is a valid ISO currency code
-  validates :local_currency, inclusion: { in: VALID_CURRENCIES }, allow_blank: true
+  # validates :local_currency, inclusion: { in: VALID_CURRENCIES }, allow_blank: true
 
   # validate acceptable audio file types
   validate :acceptable_audio
