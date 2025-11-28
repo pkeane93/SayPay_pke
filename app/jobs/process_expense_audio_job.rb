@@ -10,21 +10,14 @@ class ProcessExpenseAudioJob < ApplicationJob
     Extract the following fields:
     1. local_amount
       Return the amount as an integer in minor units (subunits), following the rules below:
-      A. For currencies with 2 decimal places
-        (EUR, USD, GBP, AUD, CAD, CHF, etc.)
         Multiply by 100
         Example:
           “45 EUR” → 4500
           “12.30 USD” → 1230
-      B. For currencies with 0 decimal places
-        (JPY, IDR, KRW, VND, XOF, KHR, etc.)
-        Do NOT multiply
-        The subunit is the same as the unit
-        Example:
-          “1,000 yen” → 1000
-          “10 rupiah” → 10
+          “1,000 yen” → 100000
+          “10 rupiah” → 1000
       Important:
-        If unsure about the currency's decimal structure, assume 0 decimals and do not multiply. If the amount is missing or unclear, return null.
+        If the amount is missing or unclear, return null.
     2. local_currency
       Return the ISO currency code (e.g., EUR, USD, JPY, IDR)
       If missing or unclear, return null.
@@ -77,41 +70,39 @@ class ProcessExpenseAudioJob < ApplicationJob
 
       transcription = nil
 
-    # begin
       transcription = RubyLLM.transcribe(
         tempfile.path,
         model: "gpt-4o-mini-transcribe",
         prompt: TRANSCRIPTION_PROMPT,
         provider: :openai)
-    # rescue StandardError => e
-    #   Rails.logger.warn("Transcription failed: #{e.class}: #{e.message}")
-    #   return
-    # end
 
-    expense.update!(audio_transcript: transcription.text)
-    debugger
+      # transcription = "Had a burger for 12 EUR at a local diner."
 
-    # Create expense record as JSON with transcription
-    ruby_llm_chat = RubyLLM.chat(provider: :gemini)
-    ruby_llm_chat.with_instructions(SYSTEM_PROMPT)
-      
-    # extraction of audio details
-    response = ruby_llm_chat.ask("Please extract expense details from this transcribed text: #{transcription.text}")
-    debugger
+      expense.update!(audio_transcript: transcription.text) # add text
 
-    parsed = JSON.parse(response.content) rescue nil
-    if parsed.present?
-      expense.update!(
-        local_amount: parsed["local_amount"],
-        local_currency: parsed["local_currency"],
-        category: parsed["category"],
-        notes: parsed["notes"]
-      )
-    else
-      Rails.logger.warn "LLM parsing returned invalid JSON: #{response.content.inspect}"
+      @ruby_llm_chat = RubyLLM.context do |config|
+        config.openai_api_key = ENV['GITHUB_TOKEN']
+        config.openai_api_base = "https://models.inference.ai.azure.com"
+      end
+
+      # # Create expense record as JSON with transcription
+      ruby_llm_chat = @ruby_llm_chat.chat
+      ruby_llm_chat.with_instructions(SYSTEM_PROMPT)
+        
+      # extraction of audio details
+      response = ruby_llm_chat.ask("Please extract expense details from this transcribed text: #{transcription.text}") # add text
+
+      parsed = JSON.parse(response.content) rescue nil
+      if parsed.present?
+        expense.update(
+          local_amount_cents: parsed["local_amount"],
+          local_amount_currency: parsed["local_currency"] || "USD",
+          category: parsed["category"],
+          notes: parsed["notes"]
+        )
+      else
+        Rails.logger.warn "LLM parsing returned invalid JSON: #{response.content.inspect}"
+      end
     end
-  end
-  # rescue => e
-  #   Rails.logger.error("ProcessExpenseAudioJob failed for expense #{expense_id}: #{e.class} #{e.message}")
   end
 end
