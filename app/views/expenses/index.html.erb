@@ -10,9 +10,7 @@
 
 <%# Container %>
 <div class="bg-[#F2FFFB] rounded-t-2xl p-10 flex-grow">
-  <%# SayPay Logo %>
-  <h1 class="mb-5 text-5xl font-bold">SayPay</h1>
-
+  
   <%# Summary %>
   <div id="exp-summary" class="border border-gray-300 rounded-md mb-5 bg-[#DDF8F0] p-2">
     <h3 class="mb-3 text-md font-bold">Trip Summary:</h3>
@@ -44,7 +42,7 @@
   <%# Cards %>
   <div id="exp-recent-cards" class="mb-5">
     <ul>
-      <%@expenses.each do |expense|%>
+      <% @expenses.each do |expense| %>
       <li class="flex border border-gray-300 rounded-md mb-2 p-2">
         <div id="logo" class="logo p-2">
           <p>Logo</p>
@@ -55,7 +53,7 @@
           <p>date</p>
         </div>
         <div id="price-category" class="p-2">
-          <p><%=expense.base_amount%> €</p>
+          <p><%=expense.local_amount.format%></p>
           <p><%=expense.category%></p>
         </div>
       </li>
