@@ -5,11 +5,10 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :trips, dependent: :destroy
-  has_many :recordings, through: :trips
-  has_many :expenses, through: :recordings
+  has_many :expenses, through: :trips
   has_many :chats, dependent: :destroy
 
   # TODO: update currency with expense way of handling currencies
-  validates :base_currency, presence: true, inclusion: { in: Expense::VALID_CURRENCIES }
+  validates :base_currency, inclusion: { in: Expense::VALID_CURRENCIES }, allow_nil: true
   validates :first_name, presence: true
 end
