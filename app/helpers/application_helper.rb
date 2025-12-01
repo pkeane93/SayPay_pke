@@ -4,6 +4,8 @@ module ApplicationHelper
   end
 
   def show_nav_and_header?
-    !(controller_name == "pages" && action_name == "home")
+    return false if controller_path.start_with?("devise/")
+    return false if controller_name == "pages" && action_name == "home"
+    true
   end
 end
