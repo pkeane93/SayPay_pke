@@ -2,7 +2,7 @@ class TripsController < ApplicationController
 
   def index
     @trips = Trip.all
-    @trips.count > 0 ? @title = "Trips" : @title = "Create a trip and start logging expenses!"
+    @trips = Trip.order(created_at: :desc)
   end
 
   def new
@@ -27,6 +27,6 @@ class TripsController < ApplicationController
   private
 
   def trip_params
-    params.require(:trip).permit(:country, :budget)
+    params.require(:trip).permit(:country, :budget, :start_date, :end_date)
   end
 end
