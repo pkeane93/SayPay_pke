@@ -12,6 +12,7 @@ export default class extends Controller {
     "startRecordingWrapper",
     "stopRecording", 
     "stopRecordingWrapper",
+    "processingWrapper",
     "fileInput" ]
 
   static values = {
@@ -60,7 +61,7 @@ export default class extends Controller {
     this.stopRecordingWrapperTarget.classList.add('hidden')
     this.stopRecordingTarget.disabled = true
     this.hideStatus()
-    chunks = []
+    this.chunks = []
   }
 
   async start(event) {
@@ -84,6 +85,11 @@ export default class extends Controller {
 
         this.mediaRecorder.ondataavailable = e => { if (e.data.size > 0) this.chunks.push(e.data) }
         this.mediaRecorder.onstop = () => {
+          // hiding the buttons
+          this.stopRecordingWrapperTarget.classList.add("hidden")
+          this.processingWrapperTarget.classList.remove("hidden")
+
+          // process recording
           const blob = new Blob(this.chunks, { type: this.chunks[0]?.type || 'audio/webm' })
           this.chunks = []
 
