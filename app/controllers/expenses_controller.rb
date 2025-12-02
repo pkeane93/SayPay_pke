@@ -18,6 +18,10 @@ class ExpensesController < ApplicationController
   def new
     @expense = Expense.new
     @trip = Trip.find(params[:trip_id])
+
+    @trips = Trip.all
+    @expenses = Expense.all
+    @summary = summarize_exp
   end
 
   def create
