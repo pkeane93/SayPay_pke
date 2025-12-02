@@ -14,7 +14,9 @@ class ExpensesController < ApplicationController
     @spending_per_country = Trip.joins(:expenses).group(:country).sum("expenses.base_amount_cents / 100.0")
 
     # Aggregate spending by day
-    @spending_over_time = @expenses.group_by_day(:created_at).sum("base_amount_cents / 100.0")
+    @spending_over_time = @expenses.group_by_day(:created_at).sum("base_amount_cents / 100.0").transform_keys do |date|
+      date.strftime("%d %B")
+    end
 
   end
 
