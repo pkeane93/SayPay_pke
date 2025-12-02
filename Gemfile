@@ -100,3 +100,6 @@ gem 'countries', '~> 8.0'
 
 # To run background jobs
 gem "solid_queue"
+# Gem that help building charts
+gem 'chartkick'
+gem 'groupdate'
