@@ -2,10 +2,8 @@ class ExpensesController < ApplicationController
 
   def index
 
-    selected_country = params[:country]
-
     if params[:country].present?
-      @trips = Trip.where(country: selected_country)
+      @trips = Trip.where(country: params[:country])
       @expenses = Expense.where(trip: @trips)
 
       # Expenses Pie Chart
@@ -114,8 +112,8 @@ class ExpensesController < ApplicationController
 
     remaining -= spent
 
-    remaining_money = Money.new(remaining, "USD")
-    spent_money = Money.new(spent, "USD")
+    remaining_money = Money.new(remaining, current_user.base_currency)
+    spent_money = Money.new(spent, current_user.base_currency)
 
     return spent_money, remaining_money, count
   end
