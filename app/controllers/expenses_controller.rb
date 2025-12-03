@@ -5,7 +5,7 @@ class ExpensesController < ApplicationController
     selected_country = params[:country]
 
     if params[:country].present?
-      @selected_trip = Trip.where(country: selected_country)
+      @trips = Trip.where(country: selected_country)
       @expenses = Expense.where(trip: @selected_trip)
 
       # Expenses Pie Chart
@@ -24,7 +24,7 @@ class ExpensesController < ApplicationController
 
     else
       @expenses = Expense.all
-      @selected_trip = Trip.all
+      @trips = Trip.all
 
       # Expenses Pie Chart
       @expenses_by_category = @expenses.group(:category).sum("base_amount_cents / 100.0")
@@ -41,7 +41,7 @@ class ExpensesController < ApplicationController
       end
     end
 
-    @trips = Trip.all
+    @filter = Trip.all
     @summary = summarize_exp
 
   end
@@ -53,6 +53,7 @@ class ExpensesController < ApplicationController
     @trips = Trip.all
     @expenses = Expense.all
     @summary = summarize_exp
+
   end
 
   def create
@@ -100,11 +101,11 @@ class ExpensesController < ApplicationController
 
     remaining = 0
 
-    @selected_trip.each do |trip|
-      remaining += trip.budget
+    @trips.each do |trip|
+      remaining += trip.budget.fractional
     end
 
-    # remaining = @user.trips[0].budget
+
     spent = 0
     count = 0
     @expenses.each do |expense|
