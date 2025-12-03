@@ -32,7 +32,7 @@
       <ul
         tabindex="-1"
         class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
-        <% @trips.each do |trip|%>
+        <% @filter.each do |trip|%>
           <li>
             <%= link_to(trip.country, expenses_path(country: trip.country)) %>
           </li>
