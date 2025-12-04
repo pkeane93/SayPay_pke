@@ -5,9 +5,9 @@
   <div id="exp-filter" class="mb-5 flex justify-between">
     <h3 class="mb-3 text-xl font-bold">Overview:</h3>
     <%# Trips %>
-    <div class="dropdown dropdown-start hover:scale-110">
+    <div class="dropdown dropdown-end hover:scale-110">
       <div tabindex="0" role="button" class="flex items-center rounded-md p-2 text-[#21A179] border">
-        <i data-lucide="sliders-horizontal"></i> <p class="ml-2 text-xl font-semibold">Trips</p>
+        <i class="h-4.5 w-4.5"data-lucide="sliders-horizontal"></i> <p class="ml-2 text-md font-semibold">Trips</p>
       </div>
       <ul tabindex="-1" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
         <li><%= link_to("All my trips", expenses_path("")) %></li>
@@ -65,6 +65,7 @@
           "#EDC948", "#B07AA1", "#FF9DA7", "#9C755F", "#BAB0AC",
           "#8CD17D", "#FFBE7D", "#AEDFF7", "#D0666C"
         ]
+
     %>
 
   </div>
@@ -115,22 +116,21 @@
   <div id="exp-recent-cards" class="mb-5">
     <ul>
       <% @expenses.each do |expense| %>
-      <li class="flex border border-gray-300 rounded-md mb-2 p-2">
-        <div id="logo" class="p-2 border-r">
-          <p><%= expense.trip.country_acronym(expense.trip.country)%></p>
-          <hr>
-
+      <li class="flex border border-gray-300 rounded-md mb-2">
+        <div id="logo" class="rounded-l-md p-4 flex justify-center items-center bg-[#ddf8f0]">
+          <i data-lucide=<%=expense_icons(expense.category)%>></i>
         </div>
 
         <div id="location-date" class="flex-grow p-2">
           <div class="flex">
-            <i data-lucide=<%=expense_icons(expense.category)%>></i>
-            <p class="ml-2 text-xl font-semibold"><%=expense.category%></p>
+            <p class="text-xl font-semibold"><%=expense.category%></p>
           </div>
-          <p class="text-sm"><%= expense.created_at.strftime("%d/%m/%Y")%></p>
+          <div>
+            <p class="text-sm"><%= expense.created_at.strftime("%d/%m/%Y")%> in <%= expense.trip.country %> </p>
+          </div>
         </div>
         <div id="price-category" class="p-2">
-          <p class="text-xl"><%=expense.local_amount.format%></p>
+          <p class="text-xl"><%=expense.base_amount.format%></p>
           <p></p>
         </div>
       </li>
@@ -140,3 +140,6 @@
   </div>
 
 </div>
+
+
+<%# expense.trip.country_acronym(expense.trip.country) %>

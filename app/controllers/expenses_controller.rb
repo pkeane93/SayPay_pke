@@ -46,9 +46,12 @@ class ExpensesController < ApplicationController
   def new
     @expense = Expense.new
     @trip = Trip.find(params[:trip_id])
+    # raise
+    # @trips = Trip.all
 
-    @trips = Trip.all
-    @expenses = Expense.all
+    @trips = Trip.where(country: @trip.country)
+    # raise
+    @expenses = Expense.where(trip: @trips)
     @summary = summarize_exp
 
   end

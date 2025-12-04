@@ -34,13 +34,13 @@ last_trip = Trip.create!(
   end_date: Date.new(2025, 12, 28)
 )
 
-Expense.create!(category: "Meals", local_amount_cents: 200000, local_amount_currency: "IDR", base_amount_cents: 1000, base_amount_currency: "EUR", audio_transcript: "burger for 200k rupiah", notes: "none", trip_id: last_trip.id)
-Expense.create!(category: "Shopping & Supplies", local_amount_cents: 300000, local_amount_currency: "IDR", base_amount_cents: 1500, base_amount_currency: "EUR", audio_transcript: "shirt for 300k rupiah", notes: "none", trip_id: last_trip.id)
-Expense.create!(category: "Meals", local_amount_cents: 56250, local_amount_currency: "IDR", base_amount_cents: 500, base_amount_currency: "EUR", audio_transcript: "coffee for 100k rupiah thai bath", notes: "none", trip_id: last_trip.id)
+Expense.create!(category: "Meals", local_amount_cents: 200000, local_amount_currency: "IDR", base_amount_cents: 1000, base_amount_currency: user.base_currency, audio_transcript: "burger for 200k rupiah", notes: "none", trip_id: last_trip.id)
+Expense.create!(category: "Shopping & Supplies", local_amount_cents: 300000, local_amount_currency: "IDR", base_amount_cents: 1500, base_amount_currency: user.base_currency, audio_transcript: "shirt for 300k rupiah", notes: "none", trip_id: last_trip.id)
+Expense.create!(category: "Meals", local_amount_cents: 56250, local_amount_currency: "IDR", base_amount_cents: 500, base_amount_currency: user.base_currency, audio_transcript: "coffee for 100k rupiah thai bath", notes: "none", trip_id: last_trip.id)
 
-Expense.create!(category: "Health & Safety", local_amount_cents: 10000, local_amount_currency: "THB", base_amount_cents: 266, base_amount_currency: "EUR", audio_transcript: "paracetamol for 100 thai bath", notes: "none", trip_id: first_trip.id)
-Expense.create!(category: "Meals", local_amount_cents: 60000, local_amount_currency: "THB", base_amount_cents: 1600, base_amount_currency: "EUR", audio_transcript: "dinner for 600 thab bath", notes: "none", trip_id: first_trip.id)
-Expense.create!(category: "Activities & Tours", local_amount_cents: 100000, local_amount_currency: "THB", base_amount_cents: 2666, base_amount_currency: "EUR", audio_transcript: "Snorkeling for 1000 thai bath", notes: "none", trip_id: first_trip.id)
+Expense.create!(category: "Health & Safety", local_amount_cents: 10000, local_amount_currency: "THB", base_amount_cents: 266, base_amount_currency: user.base_currency, audio_transcript: "paracetamol for 100 thai bath", notes: "none", trip_id: first_trip.id)
+Expense.create!(category: "Meals", local_amount_cents: 60000, local_amount_currency: "THB", base_amount_cents: 1600, base_amount_currency: user.base_currency, audio_transcript: "dinner for 600 thab bath", notes: "none", trip_id: first_trip.id)
+Expense.create!(category: "Activities & Tours", local_amount_cents: 100000, local_amount_currency: "THB", base_amount_cents: 2666, base_amount_currency: user.base_currency, audio_transcript: "Snorkeling for 1000 thai bath", notes: "none", trip_id: first_trip.id)
 
 Chat.create!(user_id: user.id, title: "test")
 
