@@ -38,7 +38,6 @@ class ExpensesController < ApplicationController
         date.strftime("%d %B")
       end
     end
-
     @filter = Trip.all.where(user: current_user)
     @summary = summarize_exp
   end
@@ -66,7 +65,7 @@ class ExpensesController < ApplicationController
     if @expense.save
       # enqueue audio processing asynchronously
       ProcessExpenseAudioJob.perform_now(@expense.id) if @expense.audio.attached?
-      redirect_to edit_trip_expense_path(trip: @expense.trip, id: @expense), notice: "Recording uploaded successfully."
+      redirect_to edit_trip_expense_path(trip: @expense.trip, id: @expense)
     else
       @expense.audio.purge if @expense.audio.attached?
       flash.now[:alert] = @expense.errors.full_messages.to_sentence
@@ -85,7 +84,7 @@ class ExpensesController < ApplicationController
 
     if @expense.update(expense_params.except(:audio))
       @expense.calculate_base_amount
-      redirect_to new_trip_expense_path(@trip), notice: "Expense updated successfully."
+      redirect_to new_trip_expense_path(@trip), notice: "Expense created successfully."
     else
       flash.now[:alert] = @expense.errors.full_messages.to_sentence
       render "expenses/edit", status: :unprocessable_entity
