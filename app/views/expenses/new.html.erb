@@ -1,6 +1,6 @@
 <% @page_title = "Record expenses" %>
 <%# CONTAINER %>
-<div class="p-6 flex flex-col items-center"
+<div class="p-5 flex flex-col items-center"
   data-controller="recording"
   data-recording-ping-sound-value="<%= asset_path('happy-message-ping-351298.mp3') %>">
 
@@ -37,7 +37,7 @@
 
       <p class="text-sm text-[#06231B]/60 mt-1">
         Total spent:
-        <span class="font-semibold text-[#06231B]"><%=@summary[0] %> € (HARD CODED EUR SIGN)</span>
+        <span class="font-semibold text-[#06231B]"><%= @summary[0].format(no_cents: true)%> </span>
       </p>
     </div>
 
