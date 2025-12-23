@@ -104,3 +104,7 @@ gem "solid_queue"
 # Gem that help building charts
 gem 'chartkick'
 gem 'groupdate'
+
+gem "dockerfile-rails", ">= 1.7", group: :development
+
+gem "aws-sdk-s3", "~> 1.208", require: false
