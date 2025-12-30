@@ -55,6 +55,10 @@ EXPOSE 3000
 
 # Correct CMD for Sliplane
 # CMD ["bin/rails", "server", "-b", "0.0.0.0", "-p", "3000"]
-# Run migrations then start server
-# CMD bin/rails db:prepare && bin/rails server -b 0.0.0.0 -p 3000
-CMD ["sh", "-c", "bin/rails db:prepare && exec bin/rails server -b 0.0.0.0 -p 3000"]
+
+# Previous attempts that failed on sliplane:
+# CMD bin/rails db:prepare && bin/rails server -b 0.0.0.0 -p 3000 -> Failed because the budget_cents/money columns were undefined in a fresh DB
+# CMD ["sh", "-c", "bin/rails db:prepare && exec bin/rails server -b 0.0.0.0 -p 3000"] -> Failed because some columns referenced in old migrations did not exist
+
+# Correct approach: load schema directly from schema.rb and start server
+CMD ["sh", "-c", "bin/rails db:schema:load && exec bin/rails server -b 0.0.0.0 -p 3000"]
