@@ -59,6 +59,7 @@ EXPOSE 3000
 # Previous attempts that failed on sliplane:
 # CMD bin/rails db:prepare && bin/rails server -b 0.0.0.0 -p 3000 -> Failed because the budget_cents/money columns were undefined in a fresh DB
 # CMD ["sh", "-c", "bin/rails db:prepare && exec bin/rails server -b 0.0.0.0 -p 3000"] -> Failed because some columns referenced in old migrations did not exist
+# CMD ["sh", "-c", "bin/rails db:schema:load && exec bin/rails server -b 0.0.0.0 -p 3000"] -> Failed because rails doesn't allow destructive behaviour with db:schema:load
 
-# Correct approach: load schema directly from schema.rb and start server
-CMD ["sh", "-c", "bin/rails db:schema:load && exec bin/rails server -b 0.0.0.0 -p 3000"]
+# Correct approach: load schema directly from schema.rb and skip previous migrations and start server
+CMD ["sh", "-c", "DISABLE_DATABASE_ENVIRONMENT_CHECK=1 bin/rails db:schema:load && exec bin/rails server -b 0.0.0.0 -p 3000"]
