@@ -1,4 +1,4 @@
-<img width="663" height="836" alt="image" src="https://github.com/user-attachments/assets/e03cd2e0-84e6-4dca-92c5-c4d4acff3046" /># SayPay 🎙️💸
+# SayPay 🎙️💸
 
 **Voice-powered expense tracker for budget-conscious travellers.**
 
