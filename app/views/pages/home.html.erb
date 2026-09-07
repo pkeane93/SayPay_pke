@@ -161,23 +161,28 @@
     </h2>
 
     <div class="flex gap-4 overflow-x-scroll no-scrollbar">
-      <!-- Example Screen -->
-      <div class="min-w-[180px] bg-white rounded-xl shadow-sm p-3">
-        <div class="h-40 bg-[#C9D2CF] rounded-lg"></div>
-        <p class="text-xs text-center text-[#06231B]/60 mt-2">Recording Screen</p>
+
+      <div class="min-w-[260px] bg-white rounded-xl shadow-sm p-3">
+        <%= image_tag "Voice_recorder.jpeg",
+              alt: "Recording an expense with your voice",
+              class: "h-40 w-full object-cover rounded-lg bg-[#C9D2CF]" %>
+        <p class="text-xs text-center text-[#06231B]/60 mt-2">Record your expense</p>
       </div>
 
-      <!-- Example Screen -->
-      <div class="min-w-[180px] bg-white rounded-xl shadow-sm p-3">
-        <div class="h-40 bg-[#C9D2CF] rounded-lg"></div>
-        <p class="text-xs text-center text-[#06231B]/60 mt-2">Expense List</p>
+      <div class="min-w-[260px] bg-white rounded-xl shadow-sm p-3">
+        <%= image_tag "expense_creation.jpeg",
+              alt: "Expense fields filled in automatically from the voice note",
+              class: "h-40 w-full object-cover rounded-lg bg-[#C9D2CF]" %>
+        <p class="text-xs text-center text-[#06231B]/60 mt-2">Filled in from your voice</p>
       </div>
 
-      <!-- Example Screen -->
-      <div class="min-w-[180px] bg-white rounded-xl shadow-sm p-3">
-        <div class="h-40 bg-[#C9D2CF] rounded-lg"></div>
-        <p class="text-xs text-center text-[#06231B]/60 mt-2">Dashboard</p>
+      <div class="min-w-[260px] bg-white rounded-xl shadow-sm p-3">
+        <%= image_tag "dashboard.jpeg",
+              alt: "Trip budget dashboard with spending by category",
+              class: "h-40 w-full object-cover rounded-lg bg-[#C9D2CF]" %>
+        <p class="text-xs text-center text-[#06231B]/60 mt-2">Track your trip budget</p>
       </div>
+
     </div>
   </section>
 
